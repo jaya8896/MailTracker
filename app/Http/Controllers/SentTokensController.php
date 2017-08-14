@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class SentTokensController extends Controller
 {
+    protected $unAuth = "Error : 401 Unauthorized. Enter correct credentials.";
 
     public function auth(){
         $user_id = \Request::server('HTTP_USER_ID');
@@ -60,19 +61,20 @@ class SentTokensController extends Controller
             $tracker = '<img src="http://127.0.0.1:8000/opens?id=';
             $tracker .=  SentTokens::latest()->first()->id;
             $tracker .= '">';
-            return $tracker;
+            return response()->json(['content' => $tracker,]);
         }
         else{
-            return "UnAuthorized User.";
+            return response()->json(['message' => $this->unAuth,],401);
         }
     }
 
     public function showAll(){
         $user = $this->auth();
         if($user){
-            return SentTokens::where('created_by','=',$user->id)->latest()->get();
-        } 
-        else return "UnAuthorized User.";
+            $item = SentTokens::where('created_by','=',$user->id)->latest()->get();
+            return response()->json(['content' => $item]);
+        }
+        else return response()->json(['message' => $this->unAuth,],401);
     }
 
     public function showTokenDetails($id){
@@ -82,19 +84,20 @@ class SentTokensController extends Controller
             if($item[0] && $item[0]->opens>0){
                 $item[] = OpenedTokens::where('tracker_id','=',$id)->get();
             }
-            return $item;
+            return response()->json(['content' => $item]);
         }
         else{
-            return "UnAuthorized User.";
+            response()->json(['message' => $this->unAuth,],401);
         }
     }
 
      public function stats(){
         $user = $this->auth();
         if($user){
-            return SentTokens::where('created_by','=',$user->id)->select('id','opens')->get();
+            $item = SentTokens::where('created_by','=',$user->id)->select('id','opens')->get();
+            return response()->json(['content' => $item]);
         }
-        else return "UnAuthorized User.";
+        else response()->json(['message' => $this->unAuth,],401);
     }
 
     public function tokenStats(Request $request, $id){
@@ -110,11 +113,11 @@ class SentTokensController extends Controller
                 }
                 sort($data_simple);
                 $tokenStats = $this->Bucketify($data_simple,$bucket);
-                return $tokenStats;
+                return response()->json(['content' => $tokenStats]);
             }
         }
         else{
-            return "UnAuthorized User.";
+            return response()->json(['message' => $this->unAuth,],401);
         }
     }
 
@@ -122,11 +125,11 @@ class SentTokensController extends Controller
         $user = $this->auth();
         if($user){
             $deleted = SentTokens::where('id', '=', $id)->where('created_by','=',$user->id)->delete();
-            if($deleted) return "Success";
-            else return "Fail";
+            if($deleted) return response()->json(['message' => "Success",]);
+            else return response()->json(['message' => "Fail",],403);
         }
         else{
-            return "UnAuthorized User.";
+            return response()->json(['message' => $this->unAuth,],401);
         }
     }
 }
