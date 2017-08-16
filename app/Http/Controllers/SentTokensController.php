@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class SentTokensController extends Controller
 {
     protected $unAuth = "Error : 401 Unauthorized. Enter correct credentials.";
+    protected $Forbid = "Error : 403 Forbidden. You don't have access to requested token.";
 
     public function auth(){
         $user_id = \Request::server('HTTP_USER_ID');
@@ -21,9 +22,9 @@ class SentTokensController extends Controller
     }
 
     public function Bucketify($data,$val){
-        $val *= 60;
-        $cur = $data[0];
-        $next = $cur + $val;
+        $val_sec = $val*60;
+        $cur = 1501525800; //Aug 1st 2017, 00:00:00 IST
+        $next = $cur + $val_sec;
         $max = end($data);
         $result = array();
         $result[$cur] = 0;
@@ -35,14 +36,14 @@ class SentTokensController extends Controller
             }
             else{
                 $cur = $next;
-                $next = $cur + $val;
+                $next = $cur + $val_sec;
                 $result[$cur] = 0;
             }
         }
         $final = array();
         foreach ($result as $key => $value) {
             if($value>0){
-                $final[\date("d F Y H:i:s", $key)." (+ ".($val/60)." min)"] = $value;
+                $final[\date("d F Y H:i:s", $key)." (+ ".($val)." min)"] = $value;
             }
         }
         return $final;
@@ -64,7 +65,7 @@ class SentTokensController extends Controller
             return response()->json(['content' => $tracker,]);
         }
         else{
-            return response()->json(['message' => $this->unAuth,],401);
+            return response()->json(['content' => $this->unAuth,],401);
         }
     }
 
@@ -74,20 +75,21 @@ class SentTokensController extends Controller
             $item = SentTokens::where('created_by','=',$user->id)->latest()->get();
             return response()->json(['content' => $item]);
         }
-        else return response()->json(['message' => $this->unAuth,],401);
+        else return response()->json(['content' => $this->unAuth,],401);
     }
 
     public function showTokenDetails($id){
         $user = $this->auth();
         if($user){
             $item = array(SentTokens::where('id','=',$id)->where('created_by','=',$user->id)->get()->first());
-            if($item[0] && $item[0]->opens>0){
-                $item[] = OpenedTokens::where('tracker_id','=',$id)->get();
+            if($item[0]){
+                if($item[0]->opens>0) $item[] = OpenedTokens::where('tracker_id','=',$id)->get();
+                return response()->json(['content' => $item]);
             }
-            return response()->json(['content' => $item]);
+            else return response()->json(['content' => $this->Forbid,],403);
         }
         else{
-            response()->json(['message' => $this->unAuth,],401);
+            response()->json(['content' => $this->unAuth,],401);
         }
     }
 
@@ -97,7 +99,7 @@ class SentTokensController extends Controller
             $item = SentTokens::where('created_by','=',$user->id)->select('id','opens')->get();
             return response()->json(['content' => $item]);
         }
-        else response()->json(['message' => $this->unAuth,],401);
+        else response()->json(['content' => $this->unAuth,],401);
     }
 
     public function tokenStats(Request $request, $id){
@@ -112,12 +114,14 @@ class SentTokensController extends Controller
                     $data_simple[] = $each['created_at']->getTimestamp();
                 }
                 sort($data_simple);
-                $tokenStats = $this->Bucketify($data_simple,$bucket);
+                $tokenStats = [];
+                if($data_simple) $tokenStats = $this->Bucketify($data_simple,$bucket);
                 return response()->json(['content' => $tokenStats]);
             }
+            else return response()->json(['content' => $this->Forbid,],403);
         }
         else{
-            return response()->json(['message' => $this->unAuth,],401);
+            return response()->json(['content' => $this->unAuth,],401);
         }
     }
 
@@ -125,11 +129,11 @@ class SentTokensController extends Controller
         $user = $this->auth();
         if($user){
             $deleted = SentTokens::where('id', '=', $id)->where('created_by','=',$user->id)->delete();
-            if($deleted) return response()->json(['message' => "Success",]);
-            else return response()->json(['message' => "Fail",],403);
+            if($deleted) return response()->json(['content' => "Success",]);
+            else return response()->json(['content' => $this->Forbid,],403);
         }
         else{
-            return response()->json(['message' => $this->unAuth,],401);
+            return response()->json(['content' => $this->unAuth,],401);
         }
     }
 }
