@@ -24,4 +24,6 @@ Route::get('/opens','OpenedTokensController@track'); //no auth
 Route::get('/stats','SentTokensController@stats');
 Route::get('/stats/{id}','SentTokensController@tokenStats');
 
+Route::get('/frauds/{id}','SentTokensController@tokenFrauds');
+
 Route::delete('/tokens/{id}','SentTokensController@delete');

@@ -17,6 +17,7 @@ class CreateSentTokensTable extends Migration
             $table->integer('created_by')->unsigned();
             $table->increments('id');
             $table->integer('opens')->default(0);
+            $table->string('dest')->nullable();
             $table->timestamps('created_at');
         });
 
