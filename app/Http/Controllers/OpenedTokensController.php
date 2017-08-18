@@ -51,8 +51,6 @@ class OpenedTokensController extends Controller
             $ua = \Request::server('HTTP_USER_AGENT');
             $parser = Parser::create();
             $result = $parser->parse($ua);
-    		$item->opens += 1;
-    		$item->save();
     		OpenedTokens::create([
     		'created_at' => \date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
     		'tracker_id' => $id,

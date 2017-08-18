@@ -87,6 +87,8 @@ class SentTokensController extends Controller
             if($value) $result[$key] = $value;
         }
 
+//        dd($result);
+
         return $result;
     }
 
@@ -171,11 +173,32 @@ class SentTokensController extends Controller
         }
     }
 
-    public function showAll(){
+    public function showAll(Request $request){
         $user = $this->auth();
         if($user){
-            $item = SentTokens::where('created_by','=',$user->id)->latest()->get();
-            return response()->json(['content' => $item]);
+            $type = $request->query('type');
+            $item = SentTokens::where('created_by','=',$user->id)->latest()->select('created_by','id','created_at')->get();
+
+            foreach ($item as $index) {
+                $index['opens'] = sizeof(OpenedTokens::where('tracker_id','=',$index['id'])->get());
+                $index['dest_url'] = ($temp=TokenDestination::where('id','=',$index['id'])->get()->first())?$temp->dest:null;
+                $index['token_type'] = ($index['dest_url'])? "Click token" : "Open token";
+            }
+
+            if($type){
+                $result = [];
+                foreach ($item as $inde){
+                    if($type=='1' && $inde['dest_url']==null){
+                        $result[] = $inde;
+                    }
+                    if($type=='2' && $inde['dest_url']){
+                        $result[] = $inde;
+                    }
+                    if($type!='1' && $type!='2') return response()->json(['content' => "Invalid 'type'"],404);
+                }
+                return response()->json(['content' => $result]);
+            }
+            else return response()->json(['content' => $item]);
         }
         else return response()->json(['content' => $this->unAuth,],401);
     }
@@ -185,7 +208,7 @@ class SentTokensController extends Controller
         if($user){
             $item = array(SentTokens::where('id','=',$id)->where('created_by','=',$user->id)->get()->first());
             if($item[0]){
-                if($item[0]->opens>0) $item[] = OpenedTokens::where('tracker_id','=',$id)->get();
+                $item[] = OpenedTokens::where('tracker_id','=',$id)->get();
                 return response()->json(['content' => $item]);
             }
             else return response()->json(['content' => $this->Forbid,],403);
@@ -195,16 +218,56 @@ class SentTokensController extends Controller
         }
     }
 
-     public function stats(){
+     public function stats(Request $request){
         $user = $this->auth();
         if($user){
-            $item = SentTokens::where('created_by','=',$user->id)->select('id','opens')->get();
+            $filters = [];
+            $filters['browser'] = $request->query('browser');
+            $filters['os'] = $request->query('os');
+            $filters['device'] = $request->query('device');
+            $type = $request->query('type');
+            $item = SentTokens::where('created_by','=',$user->id)->select('id')->get();
+
             foreach ($item as $key) {
-                if($key["opens"]>0) $key["unique_opens"] = 1;
-                else $key["unique_opens"] = 0;
+                $opens = OpenedTokens::where('tracker_id','=',$key['id'])->select('browser','os','device')->get();
+
+                $data_simple = [];
+                $ctr=0;
+                foreach ($opens as $each) {
+                    $data_simple[$ctr]['browser'] = $each['browser'];
+                    $data_simple[$ctr]['os'] = $each['os'];
+                    $data_simple[$ctr]['device'] = $each['device'];
+                    $ctr++;
+                }
+
+                $key['dest_url'] = ($temp=TokenDestination::where('id','=',$key['id'])->get()->first())?$temp->dest:null;
+                $key["count"] = sizeof($opens);
+                if($key["count"]>0) $key["unique_count"] = 1;
+                else $key["unique_count"] = 0;
+                $key["details"] = $data_simple;
             }
-            return response()->json(['content' => $item]);
+
+            $result = [];
+            if(!$type) $result = $item;
+            if($type){
+                foreach ($item as $inde){
+                    if($type=='1' && $inde['dest_url']==null){
+                        $result[] = $inde;
+                    }
+                    if($type=='2' && $inde['dest_url']){
+                        $result[] = $inde;
+                    }
+                    if($type!='1' && $type!='2') return response()->json(['content' => "Invalid 'type'"],404);
+                }
+            }
+
+            foreach ($result as $res){
+                $res['details'] = $this->Groupify($res['details'],$filters);
+            }
+
+            return response()->json(['content' => $result]);
         }
+
         else response()->json(['content' => $this->unAuth,],401);
     }
 

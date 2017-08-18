@@ -16,7 +16,6 @@ class CreateSentTokensTable extends Migration
         Schema::create('sent_tokens', function (Blueprint $table) {
             $table->integer('created_by')->unsigned();
             $table->increments('id');
-            $table->integer('opens')->default(0);
             $table->timestamps('created_at');
         });
 
