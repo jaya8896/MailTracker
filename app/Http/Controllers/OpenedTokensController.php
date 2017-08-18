@@ -25,6 +25,25 @@ class OpenedTokensController extends Controller
         return $os;
     }
 
+    public function get_client_ip() {
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
+    }
+
     public function track(Request $request){
     	$id = $request->query('id');
     	$item = SentTokens::where('id','=',$id)->get()->first();
@@ -37,7 +56,7 @@ class OpenedTokensController extends Controller
     		OpenedTokens::create([
     		'created_at' => \date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
     		'tracker_id' => $id,
-    		'user_ip' => \Request::server('HTTP_X_FORWARDED_FOR'),
+    		'user_ip' => $this->get_client_ip(),
             'browser' => explode(" ", $result->ua->family)[0],
             'os' => $this->getOS(explode(" ",$result->os->family)[0]),
             'device' => $this->getDevice(explode(" ",$result->os->family)[0]),
