@@ -44,6 +44,22 @@ class OpenedTokensController extends Controller
         return $ipaddress;
     }
 
+    public static function getTotalCount($id,$type){
+        $counts=[0,0,0];
+        $tokens = SentTokens::where('created_by','=',$id)->select('id')->get();
+        foreach ($tokens as $token) {
+            if(TokenDestination::where('id','=',$token['id'])->count()) $token['type'] = 2;
+            else $token['type'] = 1;
+        }
+
+        foreach ($tokens as $item){
+            $c = OpenedTokens::where('tracker_id','=',$item['id'])->count();
+            if($c) {$counts[$item['type']] += $c; $counts[0] += 1;}
+        }
+
+        return $counts[$type];
+    }
+
     public function track(Request $request){
     	$id = $request->query('id');
     	$item = SentTokens::where('id','=',$id)->get()->first();

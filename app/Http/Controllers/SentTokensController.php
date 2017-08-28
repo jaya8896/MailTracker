@@ -7,6 +7,8 @@ use App\OpenedTokens;
 use App\TokenDestination;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 \date_default_timezone_set('Asia/Kolkata');
 
@@ -19,6 +21,10 @@ class SentTokensController extends Controller
         $user_id = \Request::server('HTTP_USER_ID');
         $pass = \Request::server('HTTP_PASS');
         $item = User::where('id','=',$user_id)->where('password','=',$pass)->get()->first();
+        if($item==null){
+            $user = Auth::user();
+            if($user) $item=$user;
+        }
         return $item;
     }
 
@@ -88,7 +94,7 @@ class SentTokensController extends Controller
         }
 
 //        dd($result);
-
+        arsort($result);
         return $result;
     }
 
@@ -162,9 +168,11 @@ class SentTokensController extends Controller
                 $tracker .=  SentTokens::latest()->first()->id;
             }
             else{
-                $tracker = '<img src="http://127.0.0.1:8000/opens?id=';
+//                $tracker = '<img src="http://127.0.0.1:8000/opens?id=';
+//                $tracker .=  SentTokens::latest()->first()->id;
+//                $tracker .= '">';
+                $tracker = 'http://127.0.0.1:8000/opens?id=';
                 $tracker .=  SentTokens::latest()->first()->id;
-                $tracker .= '">';
             }
             return response()->json(['content' => $tracker,]);
         }
@@ -173,10 +181,11 @@ class SentTokensController extends Controller
         }
     }
 
-    public function showAll(Request $request){
+    public function showAll(){
         $user = $this->auth();
         if($user){
-            $type = $request->query('type');
+            if(!isset($_GET['type'])) $_GET['type'] = "";
+            $type = $_GET['type'];
             $item = SentTokens::where('created_by','=',$user->id)->latest()->select('created_by','id','created_at')->get();
 
             foreach ($item as $index) {
@@ -306,7 +315,7 @@ class SentTokensController extends Controller
         }
     }
 
-    public function tokenFrauds(Request $request, $id){
+    public function tokenFrauds($id){
         $user = $this->auth();
         if($user){
             $item = SentTokens::where('id','=',$id)->where('created_by','=',$user->id)->get()->first();
