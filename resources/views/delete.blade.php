@@ -30,7 +30,9 @@
                 </div>
             </div>
             <!-- page start-->
-            @if($id!='home')
+            @if($id=='delete')
+                <h2>{{$val}}</h2>
+            @elseif($id!='home')
                 <div class="my-wrap login-wrap">
                     <p>
                         <button class="btn btn-lg btn-primary" type="button" data-toggle="collapse" data-target="#metadata" aria-expanded="false" aria-controls="collapseExample">
@@ -51,10 +53,8 @@
                     </div>
                     <div class="collapse" id="log">
                         <div class="bs-callout bs-callout-danger">
-                            @php
-                                $val = ((array)app('App\Http\Controllers\SentTokensController')->delete($id)->getdata())['content'];
-                            @endphp
-                            <h4>{{$val}}</h4>
+                            <a class="btn btn-sm btn-danger" href="/delete/confirm/{{$id}}"> Confirm delete </a>
+                            <a class="btn btn-sm btn-warning" href="/delete/{{$id}}"> Cancel </a>
                         </div>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                 <h2>Your Tokens</h2>
                 @foreach($ids as $key => $val)
                     <a class="btn btn-info btn-sm btn-mar" href="/delete/{{$val}}">{{$val}}</a>
-            @endforeach
-        @endif
+                @endforeach
+            @endif
         <!-- page end-->
         </section>
     </section>

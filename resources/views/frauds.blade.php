@@ -19,7 +19,7 @@
         <section class="wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header"><i class="fa fa fa-magic"></i> My Tokens</h3>
+                    <h3 class="page-header"><i class="fa fa fa-exclamation-circle"></i>Fraud Instances</h3>
                     <ol class="breadcrumb">
                         <li><i class="fa fa-home"></i><a href="/">Home</a></li>
                         <li><i class="fa fa-exclamation-triangle"></i> <a href="/fraudStats/home"> Frauds </a> </li>

@@ -131,4 +131,13 @@ class DisplayController extends Controller
             return view('delete',compact(array('id','data')));
         }
     }
+
+    public function deleteConfirm($id)
+    {
+        $user = $this->auth();
+        if($user==null) return redirect('/');
+        $val = ((array)app('App\Http\Controllers\SentTokensController')->delete($id)->getdata())['content'];
+        $id = 'delete';
+        return view('delete',compact(array('id','val')));
+    }
 }

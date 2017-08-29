@@ -19,7 +19,7 @@
         <section class="wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header"><i class="fa fa fa-magic"></i> My Tokens</h3>
+                    <h3 class="page-header"><i class="fa fa fa-book"></i> Token Event Logs</h3>
                     <ol class="breadcrumb">
                         <li><i class="fa fa-home"></i><a href="/">Home</a></li>
                         <li><i class="fa fa-book"></i> <a href="/logs/home"> Logs </a> </li>

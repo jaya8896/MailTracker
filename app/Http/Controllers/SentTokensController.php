@@ -341,7 +341,7 @@ class SentTokensController extends Controller
         $user = $this->auth();
         if($user){
             $deleted = SentTokens::where('id', '=', $id)->where('created_by','=',$user->id)->delete();
-            if($deleted) return response()->json(['content' => "Success",]);
+            if($deleted) return response()->json(['content' => "Success. Token Deleted.",]);
             else return response()->json(['content' => $this->Forbid,],403);
         }
         else{

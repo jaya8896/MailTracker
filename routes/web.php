@@ -48,3 +48,4 @@ Route::get('/myTokens/{type}','DisplayController@myTokens');
 Route::get('/logs/{id}','DisplayController@logs');
 Route::get('/fraudStats/{id}','DisplayController@frauds');
 Route::get('/delete/{id}','DisplayController@delete');
+Route::get('/delete/confirm/{id}','DisplayController@deleteConfirm');
