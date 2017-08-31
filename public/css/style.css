@@ -9953,6 +9953,8 @@ span.customSelect.changed {
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+    width: 50%;
+    margin-left: 25%;
 }
 
 .card-block {

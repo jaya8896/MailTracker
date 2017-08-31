@@ -173,15 +173,20 @@ class DisplayController extends Controller
                 $data[$key]['details'] = (array)$data[$key]['details'];
             }
             //dd($data);
-            return view('iStats',compact(array('id','start','bucket','data')));
+            return view('iStats',compact(array('id','data')));
         }
     }
 
     public function Stats(){
         $user = $this->auth();
         if($user==null) return redirect('/');
-
-        return view('Stats');
+        $raw_data = ((array)app('App\Http\Controllers\SentTokensController')->stats()->getdata())['content'];
+        $data=[];
+        foreach ($raw_data as $key => $val) {
+            $data[$key] = ((array)$val);
+            $data[$key]['details'] = (array)$data[$key]['details'];
+        }
+        return view('Stats',compact(array('data')));
     }
 }
 

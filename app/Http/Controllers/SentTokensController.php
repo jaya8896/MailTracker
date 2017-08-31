@@ -227,14 +227,18 @@ class SentTokensController extends Controller
         }
     }
 
-     public function stats(Request $request){
+     public function stats(){
         $user = $this->auth();
         if($user){
+            if(!isset($_GET['browser'])) $_GET['browser'] = "";
+            if(!isset($_GET['os'])) $_GET['os'] = "";
+            if(!isset($_GET['device'])) $_GET['device'] = "";
+            if(!isset($_GET['type'])) $_GET['type'] = "";
             $filters = [];
-            $filters['browser'] = $request->query('browser');
-            $filters['os'] = $request->query('os');
-            $filters['device'] = $request->query('device');
-            $type = $request->query('type');
+            $filters['browser'] = $_GET['browser'];
+            $filters['os'] = $_GET['os'];
+            $filters['device'] = $_GET['device'];
+            $type = $_GET['type'];
             $item = SentTokens::where('created_by','=',$user->id)->select('id')->get();
 
             foreach ($item as $key) {
