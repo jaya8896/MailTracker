@@ -168,7 +168,12 @@ class DisplayController extends Controller
                 $data[$key] = ((array)$val);
                 $data[$key]['details'] = (array)$data[$key]['details'];
             }
-            return view('iStats',compact(array('id','data')));
+            $start = $_GET['start'];
+            $bucket = $_GET['bucket'];
+            $b = $_GET['browser'];
+            $o = $_GET['os'];
+            $d = $_GET['device'];
+            return view('iStats',compact(array('id','data','b','o','d','start','bucket')));
         }
     }
 
@@ -181,7 +186,11 @@ class DisplayController extends Controller
             $data[$key] = ((array)$val);
             $data[$key]['details'] = (array)$data[$key]['details'];
         }
-        return view('Stats',compact(array('data')));
+        $b = $_GET['browser'];
+        $o = $_GET['os'];
+        $d = $_GET['device'];
+        $t = $_GET['type'];
+        return view('Stats',compact(array('data','b','o','d','t')));
     }
 }
 

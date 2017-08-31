@@ -2,7 +2,7 @@
 <html lang="en">
 @include('layouts.head');
 
-<body>
+<body onload='SelectElement({{$b}},{{$o}},{{$d}},{{$t}});'>
 <!-- container section start -->
 <section id="container" class="">
 
@@ -97,7 +97,9 @@
 <!-- container section start -->
 
 <!-- javascripts -->
+
 @include('layouts.scripts');
+
 <script>
     function fetch(){
         var b = document.getElementById("browser");
@@ -114,6 +116,19 @@
 
         window.location.href = "http://localhost:8000/myStats/"+"?type="+type+"&browser="+browser+"&os="+os+"&device="+device;
         return;
+    }
+    function SelectElement(b,o,d,t) {
+        var element = document.getElementById('browser');
+        element.value = b;
+
+        var element = document.getElementById('os');
+        element.value = o;
+
+        var element = document.getElementById('device');
+        element.value = d;
+
+        var element = document.getElementById('type');
+        element.value = t;
     }
 </script>
 

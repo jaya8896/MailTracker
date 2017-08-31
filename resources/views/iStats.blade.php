@@ -2,7 +2,11 @@
 <html lang="en">
 @include('layouts.head');
 
-<body>
+@if($id=='home')
+    <body>
+    @else
+    <body onload='SelectElement({{$b}},{{$o}},{{$d}},{{$start}},{{$bucket}});'>
+    @endif
 <!-- container section start -->
 <section id="container" class="">
 
@@ -31,7 +35,7 @@
             </div>
             <!-- page start-->
             @if($id!='home')
-                <h3> Start : <input type="number" id="start" placeholder="1501525800" required> &nbsp; &nbsp; Bucket : <input type="number" id="bucket" placeholder="30" required> </h3>
+                <h3> Start : <input type="number" id="start" placeholder="" required> &nbsp; &nbsp; Bucket : <input type="number" id="bucket" placeholder="" required> </h3>
 
                 <h3> Browser : <select id="browser">
                         <option value="true">True</option>
@@ -128,6 +132,23 @@
 
         window.location.href = "http://localhost:8000/myStats/"+id+"?start="+start+"&bucket="+bucket+"&browser="+browser+"&os="+os+"&device="+device;
         return;
+    }
+
+    function SelectElement(b,o,d,start,bucket) {
+        var element = document.getElementById('browser');
+        element.value = b;
+
+        var element = document.getElementById('os');
+        element.value = o;
+
+        var element = document.getElementById('device');
+        element.value = d;
+
+        var element = document.getElementById('start');
+        element.value = start;
+
+        var element = document.getElementById('bucket');
+        element.value = bucket;
     }
 </script>
 

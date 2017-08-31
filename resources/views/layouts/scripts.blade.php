@@ -10,23 +10,17 @@
 <!-- charts scripts -->
 <script src="{{asset('assets/jquery-knob/js/jquery.knob.js')}}"></script>
 <script src="{{asset('js/jquery.sparkline.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js')}}"></script>
 <script src="{{asset('js/owl.carousel.js')}}" ></script>
 <!-- jQuery full calendar -->
-<<script src="{{asset('js/fullcalendar.min.js')}}"></script> <!-- Full Google Calendar - Calendar -->
-<script src="{{asset('assets/fullcalendar/fullcalendar/fullcalendar.js')}}"></script>
 <!--script for this page only-->
-<script src="{{asset('js/calendar-custom.js')}}"></script>
 <script src="{{asset('js/jquery.rateit.min.js')}}"></script>
 <!-- custom select -->
 <script src="{{asset('js/jquery.customSelect.min.js')}}" ></script>
-<script src="{{asset('assets/chart-master/Chart.js')}}"></script>
 
 <!--custome script for all page-->
 <script src="{{asset('js/scripts.js')}}"></script>
 <!-- custom script for this page-->
 <script src="{{asset('js/sparkline-chart.js')}}"></script>
-<script src="{{asset('js/easy-pie-chart.js')}}"></script>
 <script src="{{asset('js/jquery-jvectormap-1.2.2.min.js')}}"></script>
 <script src="{{asset('js/jquery-jvectormap-world-mill-en.js')}}"></script>
 <script src="{{asset('js/xcharts.min.js')}}"></script>
