@@ -44,7 +44,6 @@ class DisplayController extends Controller
         $data = [];
         foreach ($raw_data as $key => $item)
             $data[] = (array)$item;
-//        dd($data);
         return view('mytokens',compact(array('type','data')));
     }
 
@@ -75,7 +74,6 @@ class DisplayController extends Controller
             }
             return view('logs',compact(array('id','data')));
         }
-        //dd($data);
     }
 
     public function frauds($id){
@@ -102,7 +100,6 @@ class DisplayController extends Controller
             foreach ($raw_data as $key => $item){
                 $data[$key] = ((array)$item)[0];
             }
-            //dd($data);
             return view('frauds',compact(array('id','data')));
         }
     }
@@ -127,7 +124,6 @@ class DisplayController extends Controller
         else {
             if(!isset($data1[$id])) {$id='home';return view('delete',compact(array('id','ids')));}
             $data[] = $data1[$id];
-            //dd($data);
             return view('delete',compact(array('id','data')));
         }
     }
@@ -172,7 +168,6 @@ class DisplayController extends Controller
                 $data[$key] = ((array)$val);
                 $data[$key]['details'] = (array)$data[$key]['details'];
             }
-            //dd($data);
             return view('iStats',compact(array('id','data')));
         }
     }

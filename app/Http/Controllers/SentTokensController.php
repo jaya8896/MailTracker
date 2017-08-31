@@ -41,7 +41,6 @@ class SentTokensController extends Controller
                 $ctr++;
             }
         }
-        //dd($helper);
         if($ctr==1){
             foreach($helper[0] as $key => $value) {
                 $combinations[$key] = 0;
@@ -93,7 +92,6 @@ class SentTokensController extends Controller
             if($value) $result[$key] = $value;
         }
 
-//        dd($result);
         arsort($result);
         return $result;
     }
@@ -309,10 +307,8 @@ class SentTokensController extends Controller
                     $data_simple[$ctr]['device'] = $each['device'];
                     $ctr++;
                 }
-                //dd($data_simple);
                 sort($data_simple);
                 $tokenStats = [];
-                //if($data_simple) $tokenStats = $this->Groupify($data_simple,$filters);
                 if($data_simple) $tokenStats = $this->Bucketify($data_simple,$bucket,$start,$filters);
                 return response()->json(['content' => $tokenStats]);
             }

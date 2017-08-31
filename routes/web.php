@@ -14,12 +14,12 @@
 /******************BackEnd*********************/
 
 Route::post('/tokens','SentTokensController@generate');  //fe done
-Route::get('/tokens','SentTokensController@showAll');  //fe done !!check
+Route::get('/tokens','SentTokensController@showAll');  //fe done
 Route::get('/tokens/{id}','SentTokensController@showTokenDetails'); //fe done
 
 Route::get('/opens','OpenedTokensController@track'); //no auth, no fe
 
-Route::get('/stats','SentTokensController@stats');
+Route::get('/stats','SentTokensController@stats');  //fe done
 Route::get('/stats/{id}','SentTokensController@tokenStats'); //fe done
 
 Route::get('/frauds/{id}','SentTokensController@tokenFrauds'); //fe done
