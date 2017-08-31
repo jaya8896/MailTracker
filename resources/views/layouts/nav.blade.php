@@ -45,7 +45,8 @@
                     <span class="menu-arrow arrow_carrot-right"></span>
                 </a>
                 <ul class="sub">
-                    <li><a class="" href="#">Item1</a></li>
+                    <li><a class="" href="/myStats/home">Single Token</a></li>
+                    <li><a class="" href="/myStats">Overall stats</a></li>
                 </ul>
             </li>
 

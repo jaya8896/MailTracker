@@ -20,7 +20,7 @@ Route::get('/tokens/{id}','SentTokensController@showTokenDetails'); //fe done
 Route::get('/opens','OpenedTokensController@track'); //no auth, no fe
 
 Route::get('/stats','SentTokensController@stats');
-Route::get('/stats/{id}','SentTokensController@tokenStats');
+Route::get('/stats/{id}','SentTokensController@tokenStats'); //fe done
 
 Route::get('/frauds/{id}','SentTokensController@tokenFrauds'); //fe done
 
@@ -49,3 +49,5 @@ Route::get('/logs/{id}','DisplayController@logs');
 Route::get('/fraudStats/{id}','DisplayController@frauds');
 Route::get('/delete/{id}','DisplayController@delete');
 Route::get('/delete/confirm/{id}','DisplayController@deleteConfirm');
+Route::get('/myStats', 'DisplayController@Stats');
+Route::get('/myStats/{id}', 'DisplayController@iStats');

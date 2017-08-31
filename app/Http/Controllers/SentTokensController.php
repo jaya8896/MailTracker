@@ -280,15 +280,19 @@ class SentTokensController extends Controller
         else response()->json(['content' => $this->unAuth,],401);
     }
 
-    public function tokenStats(Request $request, $id){
+    public function tokenStats($id){
         $user = $this->auth();
         if($user){
-            $bucket = $request->query('bucket');
-            $start = $request->query('start');
+            if(!isset($_GET['browser'])) $_GET['browser'] = "";
+            if(!isset($_GET['os'])) $_GET['os'] = "";
+            if(!isset($_GET['device'])) $_GET['device'] = "";
+            $bucket = $_GET['bucket'];
+            $start = $_GET['start'];
+            if($bucket==null || $start==null) return response()->json(['content' => "Bad Request. Parameters 'start' or 'bucket' not set.",],400);
             $filters = [];
-            $filters['browser'] = $request->query('browser');
-            $filters['os'] = $request->query('os');
-            $filters['device'] = $request->query('device');
+            $filters['browser'] = $_GET['browser'];
+            $filters['os'] = $_GET['os'];
+            $filters['device'] = $_GET['device'];
             $item = SentTokens::where('id','=',$id)->where('created_by','=',$user->id)->get()->first();
             if($item){
                 $data = OpenedTokens::where('tracker_id','=',$id)->select('created_at','browser','os','device')->get();
