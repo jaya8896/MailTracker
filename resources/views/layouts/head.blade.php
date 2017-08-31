@@ -13,8 +13,6 @@
     <link href="{{asset('css/elegant-icons-style.css')}}" rel="stylesheet" />
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" />
     <!-- full calendar css-->
-    <link href="{{asset('assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/fullcalendar/fullcalendar/fullcalendar.css')}}" rel="stylesheet" />
     <!-- easy pie chart-->
     <link href="{{asset('assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css')}}" rel="stylesheet" type="text/css" media="screen"/>
     <!-- owl carousel -->
