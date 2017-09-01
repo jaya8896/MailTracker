@@ -26,4 +26,8 @@ class RegistrationController extends Controller
         Auth::login($user);
         return redirect('/');
     }
+
+    public function forgot(){
+        return view('forgot');
+    }
 }

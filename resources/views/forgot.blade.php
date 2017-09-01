@@ -41,27 +41,44 @@
     <div class="title m-b-md">
         <center>Open/Click Tracker</center>
     </div>
-    <form class="login-form" action="/" method="post" >
+    <form class="login-form">
+        <center><h2>Forgot Password</h2></center>
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_profile"></i></span>
-                <input type="text" class="form-control" placeholder="UserID" id="id" name="id" autofocus>
+                <input type="text" class="form-control" placeholder="UserID" id="id" name="id" autofocus required>
             </div>
             <div class="input-group">
-                <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                <span class="input-group-addon"><i class="icon_profile"></i></span>
+                <input type="email" class="form-control" placeholder="Email" id="email" name="email" autofocus required>
             </div>
-            <label class="checkbox">
-                <span class="pull-right"> <a href="/forgotPassword"> Forgot Password?</a></span>
-            </label>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+            <button class="btn btn-info btn-lg btn-block" type="submit" onclick="show()">Submit</button>
         </div>
     </form>
-    <div class="login-form login-wrap">
-    <button class="btn btn-info btn-lg btn-block" onclick="location.href='register'" type="button">No Account? Create one!</button>
+    <div>
+        <ul>
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger text-center"><li><strong>{{$error}}</strong></li></div>
+            @endforeach
+        </ul>
     </div>
 </div>
+
+<script>
+    function show() {
+        if(document.getElementById("id").value=="") {
+            window.alert("Fill in UserID field");
+            return;
+        }
+        if(document.getElementById("email").value==""){
+            window.alert("Fill in email field");
+            return;
+        }
+        window.alert("Password reset link sent to your mail.")
+        window.location.href="http://localhost:8000/"
+    }
+</script>
 
 </body>
 </html>

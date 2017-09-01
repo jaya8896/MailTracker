@@ -221,7 +221,7 @@ class SentTokensController extends Controller
             else return response()->json(['content' => $this->Forbid,],403);
         }
         else{
-            response()->json(['content' => $this->unAuth,],401);
+            return response()->json(['content' => $this->unAuth,],401);
         }
     }
 
@@ -279,7 +279,7 @@ class SentTokensController extends Controller
             return response()->json(['content' => $result]);
         }
 
-        else response()->json(['content' => $this->unAuth,],401);
+        else return response()->json(['content' => $this->unAuth,],401);
     }
 
     public function tokenStats($id){

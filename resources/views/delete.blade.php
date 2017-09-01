@@ -19,7 +19,7 @@
         <section class="wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header"><i class="fa fa fa-magic"></i> My Tokens</h3>
+                    <h3 class="page-header"><i class="fa fa fa-times"></i> Delete Token</h3>
                     <ol class="breadcrumb">
                         <li><i class="fa fa-home"></i><a href="/">Home</a></li>
                         <li><i class="fa fa-times"></i><a href="/delete/home"> Delete </a></li>
@@ -32,6 +32,7 @@
             <!-- page start-->
             @if($id=='delete')
                 <h2>{{$val}}</h2>
+                <a class="btn btn-sm btn-primary" href="/">Dashboard</a> <a class="btn btn-sm btn-danger" href="/delete/home">Delete another token</a>
             @elseif($id!='home')
                 <div class="my-wrap login-wrap">
                     <p>

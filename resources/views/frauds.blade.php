@@ -54,7 +54,7 @@
                             <h4>Fraud Instances</h4>
                             @foreach(array_slice($data, 1) as $key => $val)
                                 <div class="bs-callout bs-callout-primary">
-                                        <code>{{$key}}</code> : {{$val}}
+                                        <code>{{$key}}</code> : {{$val}} Instances
                                         <br>
                                 </div>
                             @endforeach
