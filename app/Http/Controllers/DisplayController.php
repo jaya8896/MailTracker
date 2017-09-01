@@ -67,7 +67,7 @@ class DisplayController extends Controller
         else {
             $raw_data = ((array)app('App\Http\Controllers\SentTokensController')->showTokenDetails($id)->getdata())['content'];
             $raw_data = $raw_data[1];
-            if(!isset($data1[$id])) {$id='home';return view('logs',compact(array('id','ids')));}
+            if(!isset($data1[$id])) {return redirect('/logs/home');}
             $data[] = $data1[$id];
             foreach ($raw_data as $key => $item){
                 $data[] = (array)$item;
@@ -95,7 +95,7 @@ class DisplayController extends Controller
         if($id=='home') return view('frauds',compact(array('id','ids')));
         else {
             $raw_data = ((array)app('App\Http\Controllers\SentTokensController')->tokenFrauds($id)->getdata())['content'];
-            if(!isset($data1[$id])) {$id='home';return view('frauds',compact(array('id','ids')));}
+            if(!isset($data1[$id])) {return redirect('/fraudStats/home');}
             $data[] = $data1[$id];
             foreach ($raw_data as $key => $item){
                 $data[$key] = ((array)$item)[0];
@@ -122,7 +122,7 @@ class DisplayController extends Controller
         $data=[];
         if($id=='home') return view('delete',compact(array('id','ids')));
         else {
-            if(!isset($data1[$id])) {$id='home';return view('delete',compact(array('id','ids')));}
+            if(!isset($data1[$id])) {return redirect('/delete/home');}
             $data[] = $data1[$id];
             return view('delete',compact(array('id','data')));
         }
@@ -154,7 +154,7 @@ class DisplayController extends Controller
         $data=[];
         if($id=='home') return view('iStats',compact(array('id','ids')));
         else {
-            if(!isset($data1[$id])) {$id='home';return view('iStats',compact(array('id','ids')));}
+            if(!isset($data1[$id])) {return redirect('/myStats/home');}
             if(!isset($_GET['start']) || $_GET['start']=="") {
                 $start = 1501525800;
                 $_GET['start'] = $start;

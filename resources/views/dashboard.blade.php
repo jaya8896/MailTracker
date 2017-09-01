@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('layouts.head');
+@include('layouts.head')
 
 
   <body>
@@ -8,11 +8,11 @@
   <section id="container" class="">
      
       
-      @include('layouts.top');
+      @include('layouts.top')
       <!--header end-->
 
       <!--sidebar start-->
-	  @include('layouts.nav');
+	  @include('layouts.nav')
       <!--sidebar end-->
       
       <!--main content start-->
@@ -84,7 +84,7 @@
   <!-- container section start -->
 
     <!-- javascripts -->
-    @include('layouts.scripts');
+    @include('layouts.scripts')
 
   </body>
 </html>

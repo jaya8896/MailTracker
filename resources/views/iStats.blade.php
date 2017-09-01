@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('layouts.head');
+@include('layouts.head')
 
 @if($id=='home')
     <body>
@@ -12,11 +12,11 @@
 
 
 
-    @include('layouts.top');
+    @include('layouts.top')
     <!--header end-->
 
     <!--sidebar start-->
-    @include('layouts.nav');
+    @include('layouts.nav')
     <!--sidebar end-->
 
     <section id="main-content">
@@ -107,7 +107,7 @@
 <!-- container section start -->
 
 <!-- javascripts -->
-@include('layouts.scripts');
+@include('layouts.scripts')
 <script>
     function get() {
         var id = document.getElementById("token-id").value;

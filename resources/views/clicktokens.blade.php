@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('layouts.head');
+@include('layouts.head')
 <body>
 <!-- container section start -->
 <section id="container" class="">
 
 
 
-    @include('layouts.top');
+    @include('layouts.top')
     <!--header end-->
 
     <!--sidebar start-->
-    @include('layouts.nav');
+    @include('layouts.nav')
     <!--sidebar end-->
 
     <section id="main-content">
@@ -63,7 +63,7 @@
 <!-- container section start -->
 
 <!-- javascripts -->
-@include('layouts.scripts');
+@include('layouts.scripts')
 <script>
     function get(idd) {
         if(document.getElementById("desti").value=="") {document.getElementById("open-token-generate").innerHTML = "Enter a Destination Url"; return;}

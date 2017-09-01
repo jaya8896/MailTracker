@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('layouts.head');
+@include('layouts.head')
 
 <body>
 <!-- container section start -->
@@ -8,11 +8,11 @@
 
 
 
-    @include('layouts.top');
+    @include('layouts.top')
     <!--header end-->
 
     <!--sidebar start-->
-    @include('layouts.nav');
+    @include('layouts.nav')
     <!--sidebar end-->
 
     <section id="main-content">
@@ -55,7 +55,7 @@
 <!-- container section start -->
 
 <!-- javascripts -->
-@include('layouts.scripts');
+@include('layouts.scripts')
 <script>
     function get(idd) {
         var xhttp = new XMLHttpRequest();
