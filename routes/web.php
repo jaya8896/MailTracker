@@ -37,6 +37,7 @@ Route::get('/dashboard', 'SessionsController@dash')->name('home');
 Route::get('/register','RegistrationController@create');
 Route::post('/register','RegistrationController@store');
 Route::get('/forgotPassword','RegistrationController@forgot');
+Route::post('/forgotPassword','RegistrationController@reset');
 
 Route::get('/','SessionsController@create');
 Route::post('/','SessionsController@store');

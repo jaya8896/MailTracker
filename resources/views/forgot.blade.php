@@ -41,7 +41,7 @@
     <div class="title m-b-md">
         <center>Open/Click Tracker</center>
     </div>
-    <form class="login-form">
+    <form class="login-form" method="post" action="/forgotPassword">
         <center><h2>Forgot Password</h2></center>
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
@@ -53,7 +53,7 @@
                 <span class="input-group-addon"><i class="icon_profile"></i></span>
                 <input type="email" class="form-control" placeholder="Email" id="email" name="email" autofocus required>
             </div>
-            <button class="btn btn-info btn-lg btn-block" type="submit" onclick="show()">Submit</button>
+            <button class="btn btn-info btn-lg btn-block" type="submit">Submit</button>
         </div>
     </form>
     <div>

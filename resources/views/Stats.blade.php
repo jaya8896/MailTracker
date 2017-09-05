@@ -2,7 +2,7 @@
 <html lang="en">
 @include('layouts.head')
 
-<body onload='SelectElement({{$b}},{{$o}},{{$d}},{{$t}});'>
+<body onload='SelectElement({{$b}},{{$o}},{{$d}},{{$t}})'>
 <!-- container section start -->
 <section id="container" class="">
 
