@@ -1,6 +1,8 @@
 Clone the Repo.
 
-Install the dependencies.
+Install the dependencies. (Using <code>composer require </code>)
+
+Start mysql server.
 
 Run <code>php artisan serve</code>
 
